@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>栈封装</title>
+  </head>
+  <body>
+    <button id="btn">Click me!</button>
+    <script>
+      //封装栈类
+      function Stack() {
+        this.items = [];
+
+        //栈的操作
+        //1. 将元素压入栈
+        Stack.prototype.push = function (element) {
+          this.items.push(element);
+        };
+        //2. 将元素取出栈
+        Stack.prototype.pop = function (element) {
+          this.items.pop(element);
+        };
+        //3. 查看以下栈顶元素
+        Stack.prototype.peek = function () {
+          return this.items[this.items.length - 1];
+        };
+        //4. 判断栈是否为空
+        Stack.prototype.isEmpty = function () {
+          return this.items.length == 0;
+        };
+        //5. 获取栈中元素的个数
+        Stack.prototype.size = function () {
+          return this.items.length;
+        };
+        //5. toString() 方法
+        Stack.prototype.toString = function () {
+          var resultString = "";
+          for (var i = 0; i < this.items.length; i++) {
+            resultString += this.items[i] + "  ";
+          }
+          return resultString;
+        };
+      }
+
+      // var s = new Stack()
+
+      // s.push(20)
+      // s.push(21)
+      // s.push(22)
+      // s.push(23)
+
+      // alert(s)
+
+      // s.pop()
+      // s.pop()
+      // alert(s.peek())
+
+      function dec2bin(decNumber) {
+        var stack = new Stack();
+        while (decNumber > 0) {
+          stack.push(decNumber % 2);
+          decNumber = Math.floor(decNumber / 2);
+        }
+
+        var binaryString = "";
+        while (!stack.isEmpty()) {
+          binaryString += stack.items.pop();
+        }
+        return binaryString;
+      }
+      console.log(dec2bin(1000));
+
+      function getType(data) {
+        let type = typeof data;
+        if (type !== "object") {
+          return type;
+        }
+        return Object.prototype.toString.call(data);
+      }
+
+     
+    </script>
+  </body>
+</html>

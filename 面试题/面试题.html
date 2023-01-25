@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // console.log(
+      //   getType(
+      //     (hello = () => {
+      //       "1";
+      //     })
+      //   )
+      // );
+
+      function showTitle() {
+        console.log("click");
+      }
+
+      //时间戳节流
+      function throttle(fn, delay = 2000) {
+        let oldTime = Date.now();
+        return function (...args) {
+          let newTime = Date.now();
+          console.log("节流newTime", newTime);
+          if (newTime - oldTime >= delay) {
+            console.log("click");
+            oldTime = Date.now();
+          }
+        };
+      }
+
+      //防抖
+      function debounce(wait, immediate) {
+        let timeout;
+        return function (...args) {
+          console.log(timeout);
+          clearTimeout(timeout);
+
+          timeout = setTimeout(() => {
+            console.log("waiting to response");
+          }, wait);
+        };
+      }
+
+      btn.onclick = throttle(2000);
+
+      //浅拷贝
+      function shallowClone(oldObj) {
+        let newObj = {};
+        for (let prop in oldObj) {
+          if (oldObj.hasOwnProperty(prop)) {
+            newObj[prop] = oldObj[prop];
+          }
+        }
+
+        return newObj;
+      }
+      let oldObj = {
+        name: "yixuan",
+        age: { a: "2021", b: 21 },
+      };
+      let newObj = shallowClone(oldObj);
+      oldObj.age.a = "2022";
+      console.log("oldObj", oldObj);
+      console.log("newObj", newObj);
+
+      const fxArr = ["One", ["Two", "Two.Five"], "Three"];
+      const fxArrs = fxArr.slice(0);
+      fxArrs[1][1] = "Two.Six";
+      console.log(fxArr);
+      console.log(fxArrs);
+      //深拷贝
+      function checkType(target) {
+        return Object.prototype.toString.call(target).slice(8, -1);
+      }
+      function deepClone(target) {
+        let type = checkType(target);
+        if (type !== "Object") return type;
+        if (type === "Array") {
+          var newObj = [];
+        }
+        if (type === "Object") {
+          var newObj = {};
+        }
+        for (let i in target) {
+          if (
+            checkType(target[i]) === "Object" ||
+            checkType(target[i]) === "Array"
+          ) {
+            newObj[i] = deepClone(target[i]);
+          } else {
+            newObj[i] = target[i];
+          }
+        }
+
+        return newObj;
+      }
+
+      let newDeepObj = deepClone(oldObj);
+
+      console.log("newDeepObj", newDeepObj); // age: {a: '2022', b: 21}
+
+      oldObj.age.a = "2021"; // 浅拷贝的已经变成2021了
+
+      var arr = [20, -1, 27, -7, 35];
+      function bubbleSort(arr) {
+        for (var j = 0; j < arr.length - 1; j++) {
+          // 这里要根据外层for循环的 j，逐渐减少内层 for循环的次数
+          for (var i = 0; i < arr.length - 1 - j; i++) {
+            if (arr[i] > arr[i + 1]) {
+              var temp = arr[i];
+              arr[i] = arr[i + 1];
+              arr[i + 1] = temp;
+            }
+          }
+        }
+        return arr;
+      }
+      bubbleSort(arr);
+      console.log("arr", arr);
+
+
+     
+
+
+
+
+
+      console.log("script start");
+
+      async function async1() {
+        await async2();
+        console.log("async1 end");
+      }
+      async function async2() {
+        console.log("async2 end");
+      }
+      async1();
+
+      setTimeout(function () {
+        console.log("setTimeout");
+      }, 0);
+
+      new Promise((resolve) => {
+        console.log("Promise");
+        resolve();
+      })
+        .then(function () {
+          console.log("promise1");
+        })
+        .then(function () {
+          console.log("promise2");
+        });
+
+      console.log("script end");
+    </script>
+  </body>
+</html>
